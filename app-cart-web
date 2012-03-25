@@ -18,6 +18,11 @@ get '/' => sub {
   $self->render('index');
 };
 
+get '/config' => sub {
+  my $self = shift;
+  $self->render('config');
+};
+
 get '/api/list' => sub {
     my $self = shift;
 
@@ -25,6 +30,15 @@ get '/api/list' => sub {
     $sth->execute;
 
     $self->render_json($sth->fetchall_arrayref({}));
+};
+
+get '/api/config' => sub {
+    my $self = shift;
+    
+    require YAML::Any;
+    my $conf = YAML::Any::LoadFile(app->config->{cart_home} . '/cart.yml');
+
+    $self->render_json($conf);
 };
 
 app->start;
