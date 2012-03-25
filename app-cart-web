@@ -1,0 +1,31 @@
+#!/usr/bin/env perl
+use Mojolicious::Lite;
+
+plugin 'Config';
+plugin 'Database' => {
+    dsn     => 'dbi:SQLite:dbname=' . app->config->{cart_home} . '/cart.db',
+    helper  => 'db',
+    options => {
+        sqlite_unicode  => 1,
+        RaiseError      => 1,
+    },
+};
+
+app->secret('test');
+
+get '/' => sub {
+  my $self = shift;
+  $self->render('index');
+};
+
+get '/api/list' => sub {
+    my $self = shift;
+
+    my $sth = $self->db->prepare('SELECT * FROM tweets');
+    $sth->execute;
+
+    $self->render_json($sth->fetchall_arrayref({}));
+};
+
+app->start;
+

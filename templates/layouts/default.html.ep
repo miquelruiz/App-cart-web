@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    %= stylesheet "/css/bootstrap.min.css"
+    %= stylesheet "/css/custom.css"
+  </head>
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="#">CaRT Manager</a>
+          <ul class="nav">
+            <li class="active"><a href="/">Home</a></li>
+          </ul>
+          <ul class="nav pull-right">
+            <li class="divider-vertical"></li>
+            <li>
+              <button id="btn-delete" class="btn btn-danger" data-toggle="button">
+                <i class="icon-trash icon-white"></i> Delete
+              </button>
+            </li>
+        </div>
+      </div>
+    </div>
+    
+    <div class="container">
+    <%= content %>
+    </div>
+
+    %= javascript "/js/jquery-min.js"
+    %= javascript "/js/underscore.js"
+    %= javascript "/js/backbone-min.js"
+    %= javascript "/js/bootstrap.min.js"
+    % for (@$jscripts) {
+    %= javascript $_
+    % }
+
+    <script type="text/template" id="tpl-tweet-list">
+    <thead>
+      <tr>
+      <%% for (var prop in tweet) { %><th><%%= prop %></th><%% } %>
+      </tr>
+    </thead>
+    <%%= tbody %>
+    </script>
+    <script type="text/template" id="tpl-single-tweet">
+    <%% for (var prop in tweet) { %>
+      <td><%%= tweet[prop] %></td>
+    <%% } %>
+    </script>
+
+  </body>
+</html>

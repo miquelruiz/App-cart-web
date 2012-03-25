@@ -1,0 +1,5 @@
+% layout 'default',
+% title => 'CaRT Manager',
+% jscripts => [ '/js/tweets-list.js' ];
+<div class="page-header"><h1>Currently buffered tweets: <span id="tweet-count"></span></h1></div>
+<div id="tweets-list"></div>
