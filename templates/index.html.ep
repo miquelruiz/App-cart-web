@@ -2,4 +2,21 @@
 % title => 'CaRT Manager',
 % jscripts => [ '/js/tweets-list.js' ];
 <div class="page-header"><h1>Currently buffered tweets: <span id="tweet-count"></span></h1></div>
-<div id="tweets-list"></div>
+<div><table id="tweet-list" class="table table-bordered table-striped"></table></div>
+
+<script type="text/template" id="tpl-tweet-list">
+  <thead>
+    <tr>
+    <%% for (var prop in tweet) { %><th><%%= prop %></th><%% } %>
+    </tr>
+  </thead>
+  <%%= tbody %>
+</script>
+
+<script type="text/template" id="tpl-single-tweet">
+  <%% for (var prop in tweet) { %>
+    <td><%%= tweet[prop] %></td>
+  <%% } %>
+</script>
+
+

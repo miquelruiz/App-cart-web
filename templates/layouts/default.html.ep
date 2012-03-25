@@ -13,6 +13,7 @@
           <a class="brand" href="#">CaRT Manager</a>
           <ul class="nav">
             <li class="active"><a href="/">Home</a></li>
+            <li><a href="/config">Config</a></li>
           </ul>
           <ul class="nav pull-right">
             <li class="divider-vertical"></li>
@@ -33,23 +34,10 @@
     %= javascript "/js/underscore.js"
     %= javascript "/js/backbone-min.js"
     %= javascript "/js/bootstrap.min.js"
+    %= javascript "/js/common.js"
     % for (@$jscripts) {
     %= javascript $_
     % }
-
-    <script type="text/template" id="tpl-tweet-list">
-    <thead>
-      <tr>
-      <%% for (var prop in tweet) { %><th><%%= prop %></th><%% } %>
-      </tr>
-    </thead>
-    <%%= tbody %>
-    </script>
-    <script type="text/template" id="tpl-single-tweet">
-    <%% for (var prop in tweet) { %>
-      <td><%%= tweet[prop] %></td>
-    <%% } %>
-    </script>
 
   </body>
 </html>

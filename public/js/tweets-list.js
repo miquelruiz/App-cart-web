@@ -1,22 +1,21 @@
 $(function() {
 
-window.Tweet = Backbone.Model.extend();
+var Tweet = Backbone.Model.extend();
 
-window.TweetCollection = Backbone.Collection.extend({
+var TweetCollection = Backbone.Collection.extend({
     model: Tweet,
     url:   '/api/list'
 });
 
-window.TweetListView = Backbone.View.extend({
 
-    tagName: 'table',
+var TweetListView = Backbone.View.extend({
 
-    className: 'table table-bordered table-striped',
-
+    el: "table#tweet-list",
     template: _.template($("#tpl-tweet-list").html()),
-
     initialize: function () {
         this.model.bind("reset", this.render, this);
+        this.countView = new TweetListCount({model: this.model});
+        this.model.fetch();
     },
 
     render: function () {
@@ -41,7 +40,7 @@ window.TweetListView = Backbone.View.extend({
     }
 });
 
-window.TweetSingleView = Backbone.View.extend({
+var TweetSingleView = Backbone.View.extend({
 
     tagName: 'tr',
     className: 'tweet',
@@ -63,10 +62,9 @@ window.TweetSingleView = Backbone.View.extend({
     }
 });
 
-window.TweetListCount = Backbone.View.extend({
+var TweetListCount = Backbone.View.extend({
 
     el: 'span#tweet-count',
-
     initialize: function () {
         this.model.bind("reset", this.render, this);
     },
@@ -75,38 +73,8 @@ window.TweetListCount = Backbone.View.extend({
         this.$el.html(this.model.length);
     }
 });
-       
-var AppRouter = Backbone.Router.extend({
 
-    routes: {
-        "":"list",
-        "tweet/:id":"details"
-    },
-
-    list: function() {
-        this.tweetList = new TweetCollection();
-        this.tweetListView  = new TweetListView ({model: this.tweetList});
-        this.tweetListCount = new TweetListCount({model: this.tweetList});
-        this.tweetList.fetch();
-        $('div#tweets-list').html(this.tweetListView.render().el);
-
-        // Make rows clickable
-        console.log($('tr.tweet').length);
-        $('tr.tweet').click(function(){ console.log("abcd"); });
-    },
-
-    details: function(id) {
-        this.tweet = this.tweetList.get(id);
-        console.log("Tweet " + id + " selected");
-        this.tweetView = new TweetSingleView({model: this.tweet});
-    }
-});
-
-var app = new AppRouter();
-Backbone.history.start();
-
-// Enable delete button to be a toggle
-$("#btn-delete").button();
+var app = new TweetListView({ model: new TweetCollection });
 
 });
 
